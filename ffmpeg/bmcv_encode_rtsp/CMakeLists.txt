@@ -29,12 +29,15 @@ if (${TARGET_ARCH} STREQUAL "base")
     # use opencv
     set(OpenCV_DIR /opt/sophon/sophon-opencv-latest/lib/cmake/opencv4/)
     find_package(OpenCV REQUIRED)
-    include_directories(${OpenCV_INCLUDE_DIRS})
+    include_directories(${OpenCV_INCLUDE_DIRS})    
+    include_directories("./include/")
 
     aux_source_directory(. SRC_FILES)
+    aux_source_directory(./src/ SRC_FILES)
 
     add_executable(test ${SRC_FILES})
-    target_link_libraries(test ${the_libbmrt.so} ${the_libbmcv.so}  ${FFMPEG_LIBS}  ${OpenCV_LIBS} -lpthread)
+    target_link_libraries(test ${the_libbmlib.so} ${FFMPEG_LIBS} ${OpenCV_LIBS} ${the_libbmrt.so} ${the_libbmcv.so} -lpthread)
+
 
 elseif (${TARGET_ARCH} STREQUAL "pcie")
     message( "${TARGET_ARCH} mode, starting......")
