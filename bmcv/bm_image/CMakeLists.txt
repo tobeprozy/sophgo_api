@@ -11,10 +11,21 @@ message("cur dir: ${CMAKE_CURRENT_BINARY_DIR}")
 SET(CMAKE_BUILD_TYPE "DEBUG")
 
 if (NOT DEFINED TARGET_ARCH)
-    set(TARGET_ARCH pcie)
+    set(TARGET_ARCH base)
 endif()
+if (${TARGET_ARCH} STREQUAL "base")
+     message( "${TARGET_ARCH} mode, starting......")
+     
+    # use libbmrt libbmlib
+    find_package(libsophon REQUIRED)
+    include_directories(${LIBSOPHON_INCLUDE_DIRS})
+    link_directories(${LIBSOPHON_LIB_DIRS})
 
-if (${TARGET_ARCH} STREQUAL "pcie")
+    aux_source_directory(. SRC_FILES)
+    add_executable(test ${SRC_FILES})
+    target_link_libraries(test ${the_libbmlib.so} ${the_libbmrt.so} ${the_libbmcv.so} -lpthread)
+
+elseif (${TARGET_ARCH} STREQUAL "pcie")
     message( "${TARGET_ARCH} mode, starting......")
     # set(lib_DIR /usr/lib/x84_64-linux-gnu)
     # link_directories(${lib_DIR})
