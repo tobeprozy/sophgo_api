@@ -1,12 +1,3 @@
-//===----------------------------------------------------------------------===//
-//
-// Copyright (C) 2023 Sophgo Technologies Inc.  All rights reserved.
-//
-// SOPHON-DEMO is licensed under the 2-Clause BSD License except for the
-// third-party components.
-//
-//===----------------------------------------------------------------------===//
-
 #include <string.h>
 #include <iostream>
 #include "bmcv_api_ext.h"
