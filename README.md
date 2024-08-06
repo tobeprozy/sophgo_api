@@ -1,7 +1,7 @@
 # sophgo_api
 
 ## 目录结构
-
+```bash
 .
 ├── bmcv
 │   ├── bm_image
@@ -45,3 +45,4 @@
     ├── media_basic
     ├── python
     └── README.md
+```
