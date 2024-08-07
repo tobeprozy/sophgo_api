@@ -8,19 +8,15 @@ SET(CMAKE_BUILD_TYPE "Debug")
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 message("cur dir: ${CMAKE_CURRENT_BINARY_DIR}")
 
-
-
 if (NOT DEFINED TARGET_ARCH)
     set(TARGET_ARCH base)
 endif()
 if (${TARGET_ARCH} STREQUAL "base")
      message( "${TARGET_ARCH} mode, starting......")
     
-    find_package(Python REQUIRED)
 
-    if (PYTHON_INCLUDE_DIRS)
-        include_directories(${PYTHON_INCLUDE_DIRS})
-    endif()
+    find_package(PythonLibs REQUIRED)
+    include_directories(${PYTHON_INCLUDE_DIRS})
 
 
     # use libbmrt libbmlib
@@ -44,8 +40,6 @@ if (${TARGET_ARCH} STREQUAL "base")
     add_executable(test ${SRC_FILES})
     
     target_link_libraries(test ${the_libbmlib.so} ${OpenCV_LIBS} ${the_libbmrt.so} ${the_libbmcv.so} ${PYTHON_LIBRARIES} -lpthread)
-
-
 
 elseif (${TARGET_ARCH} STREQUAL "pcie")
     message( "${TARGET_ARCH} mode, starting......")
