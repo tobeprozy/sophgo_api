@@ -177,8 +177,6 @@ int main(int argc, char* argv[]) {
   // 将数据转换为 Python 字节对象
   // py::bytes result2(reinterpret_cast<const char*>(output_ptr), byte_size);
 
-  
-
   // create_and_convert_bytes();
   std::cout << "result: "<< std::endl;
   std::cout << "result2: "<< std::endl;
