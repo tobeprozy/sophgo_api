@@ -9,10 +9,10 @@ decoder = sail.Decoder("test.jpg", True, 0)
 bimg = sail.BMImage()
 ret = decoder.read(handle, bimg)
 
-rgb_planar_img = sail.BMImage(handle, bimg.height(), bimg.width(),
+yuv420_img = sail.BMImage(handle, bimg.height(), bimg.width(),
                                           sail.Format.FORMAT_YUV420P, sail.DATA_TYPE_EXT_1N_BYTE)
-bmcv.convert_format(bimg, rgb_planar_img)
+bmcv.convert_format(bimg, yuv420_img)
 
-crop_img = rgb_planar_img.asmat()
+imgyuv420= yuv420_img.asmat()
 
 print("all down")
