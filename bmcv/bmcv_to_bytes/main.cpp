@@ -19,6 +19,7 @@ namespace py = pybind11;
 using namespace std;
 
 
+
 void create_and_convert_bytes() {
     size_t byte_size = 10; // 假设我们想要创建包含10个字节的数组
     unsigned char* output_ptr = static_cast<unsigned char*>(malloc(byte_size));
@@ -142,6 +143,7 @@ bool bm_image_to_bytes(bm_handle_t bm_handle, const bm_image& frame, std::vector
 }
 
 
+
 int main(int argc, char* argv[]) {
   cout << "nihao!!" << endl;
 
@@ -160,6 +162,7 @@ int main(int argc, char* argv[]) {
 
   int width = frame.width;
   int height = frame.height;
+<<<<<<< HEAD
   std::vector<unsigned char> byte_data;
   bm_image_to_bytes(bm_handle, frame, byte_data);
 
