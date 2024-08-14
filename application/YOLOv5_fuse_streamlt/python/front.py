@@ -58,8 +58,7 @@ if enter:
         file_extension = file.name.split(".")[-1].lower()
         if file_extension in ["jpg", "jpeg", "png"]:
             frame = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
-            compressed_image1 = compress_image(frame)
-            video_placeholder.image(compressed_image1, caption='origin Image.', channels="BGR")
+            
 
             _, encoded_image = cv2.imencode('.jpg', frame)
             image_base64 = base64.b64encode(encoded_image).decode('utf-8')
@@ -82,6 +81,8 @@ if enter:
                     image_placeholder.image(processed_image, caption='Processed Image.', use_column_width=True)
             else:
                 st.error("后端处理出现问题，请重试或联系管理员")
+            compressed_image1 = compress_image(frame)
+            video_placeholder.image(compressed_image1, caption='origin Image.', channels="BGR")
         elif file_extension in ["mp4", "avi", "mov"]:
                 # 处理视频
                 # 保存上传的视频文件到本地临时文件夹
