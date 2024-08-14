@@ -1,7 +1,3 @@
-# sophgo_api
-
-## 目录结构
-```bash
 .
 ├── application
 │   ├── VLPR
@@ -70,3 +66,5 @@
 │   ├── python
 │   └── README.md
 └── tree.log
+
+55 directories, 12 files
