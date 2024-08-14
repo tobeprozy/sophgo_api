@@ -1,3 +1,5 @@
 **/build/
 **/results/
 *.bmodel
+**/models/
+**/datasets/
