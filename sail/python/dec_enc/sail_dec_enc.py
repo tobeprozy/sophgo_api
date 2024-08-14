@@ -9,20 +9,26 @@ import numpy as np
 def decode_and_enqueue(handle, device_id, video_path, q, queue_lock):
     decoder = sail.Decoder(video_path, True, device_id)
     while True:
+        frame_interval=0
+        frame_counter=0s
         image = decoder.read(handle)
+        fps=decoder.get_fps()
         if image is None:
             break
         with queue_lock:
-            try:
-                q.put_nowait(image)  # 确保使用正确的队列实例变量名
-            except queue.Full:  # 正确捕获queue.Full异常
-                q.get_nowait()  # 如果队列满了，剔除最旧的数据
-                q.put_nowait(image)
+            if (frame_counter % frame_interval == 0):
+                try:
+                    q.put_nowait(image)  # 确保使用正确的队列实例变量名
+                except queue.Full:  # 正确捕获queue.Full异常
+                    q.get_nowait()  # 如果队列满了，剔除最旧的数据
+                    q.put_nowait(image)
+            frame_counter += 1
+        decoder.release()
 
 def process_queue(queue_, bmcv, queue_id):
     i = 0
     while True:
-        try:
+        try: 
             img = queue_.get(timeout=1)
             # print(f"imwrite {i}, queue_id: {queue_id}")
             # bmcv.imwrite(f"./multi-channel_decoded_images/{queue_id}_{i}.jpg", img)

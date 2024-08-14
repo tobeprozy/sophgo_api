@@ -1,2 +1,2 @@
 git commit -m "add api"
-git push
+git push origin developer
