@@ -99,12 +99,29 @@ if enter:
                         end_flag = True
                     if frame_count % interval == 0:
                         # 在画面上进行后端处理，这里简单地将画面转为灰度图像
-                        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                        compressed_image1 = compress_image(frame)  # 压缩图像
-                        compressed_image2 = compress_image(gray_frame)  # 压缩图像
-            
-                        video_placeholder.image(compressed_image1, channels="BGR")
-                        image_placeholder.image(compressed_image2, channels="GRAY")
+                        _, encoded_image = cv2.imencode('.jpg', frame)
+                        image_base64 = base64.b64encode(encoded_image).decode('utf-8')
+                        id = int(time.time() * 1000) + random.randint(0, 999)
+
+                        print(image_base64)
+                        response = requests.post(f'{server_url}/push_data', data={
+                            'id': id,
+                            'image': image_base64
+                        })
+
+                        print(response.text)
+
+                        if response.status_code == 200:
+                            result = response.json()
+                            img_name = result.get('frame_id')
+                            jpg_base64 = result.get('jpg_base64')
+                            if img_name and jpg_base64:
+                                processed_image = base64.b64decode(jpg_base64)
+                                image_placeholder.image(processed_image, caption='Processed Image.', use_column_width=True)
+                        else:
+                            st.error("后端处理出现问题，请重试或联系管理员")
+                        compressed_image1 = compress_image(frame)
+                        video_placeholder.image(compressed_image1, caption='origin Image.', channels="BGR")
 
                     frame_count += 1
         elif url:
@@ -118,14 +135,29 @@ if enter:
                         end_flag = True
                     if frame_count % interval == 0:
                         # 在画面上进行后端处理，这里简单地将画面转为灰度图像
-                        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                        
-                        compressed_image1 = compress_image(frame)  # 压缩图像
-                        compressed_image2 = compress_image(gray_frame)  # 压缩图像
-            
-                        video_placeholder.image(compressed_image1, channels="BGR")
-                        image_placeholder.image(compressed_image2, channels="GRAY")
-                                
+                        _, encoded_image = cv2.imencode('.jpg', frame)
+                        image_base64 = base64.b64encode(encoded_image).decode('utf-8')
+                        id = int(time.time() * 1000) + random.randint(0, 999)
+
+                        print(image_base64)
+                        response = requests.post(f'{server_url}/push_data', data={
+                            'id': id,
+                            'image': image_base64
+                        })
+
+                        print(response.text)
+
+                        if response.status_code == 200:
+                            result = response.json()
+                            img_name = result.get('frame_id')
+                            jpg_base64 = result.get('jpg_base64')
+                            if img_name and jpg_base64:
+                                processed_image = base64.b64decode(jpg_base64)
+                                image_placeholder.image(processed_image, caption='Processed Image.', use_column_width=True)
+                        else:
+                            st.error("后端处理出现问题，请重试或联系管理员")
+                        compressed_image1 = compress_image(frame)
+                        video_placeholder.image(compressed_image1, caption='origin Image.', channels="BGR")      
                     frame_count += 1
         else:
             st.warning("请上传视频或图片文件或输入视频或图片URL")
